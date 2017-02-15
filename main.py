@@ -1,5 +1,12 @@
 #! python3
 
+<<<<<<< HEAD
+=======
+# Flappy Bird avec intelligence artificielle par génétique
+# Inspiration de https://github.com/potterua/flappy-bird/blob/master/game.py et des docs officielles (essentiellement pour les méthodes utiles)
+
+# imports
+>>>>>>> 678ea4fa05a58866e37908d972fe4501bb4025cd
 import tkinter
 import random
 import json, binascii, codecs
@@ -24,6 +31,11 @@ pipelineY = 150
 pipelineTop = background.create_rectangle(pipelineX, 0, pipelineX + 70, pipelineY, fill="#7B2", outline="#7B2")
 pipelineBottom = background.create_rectangle(pipelineX, pipelineY + 100, pipelineX + 70, 500, fill="#7B2", outline="#7B2")
 
+<<<<<<< HEAD
+=======
+iSText = background.create_text(230, 50, fill="white", font="Times 50 bold", text="0")
+
+>>>>>>> 678ea4fa05a58866e37908d972fe4501bb4025cd
 try:
 	with open('stats.json', 'r') as f:
 		temp = f.read()
@@ -55,6 +67,10 @@ def restart(event):
 	print('Reboot: %i\nScore: %i\nBest: %i\n' % (nG, iS, bS))
 	nG += 1 # update number of games
 	iS = 0 # reset instant score
+<<<<<<< HEAD
+=======
+	background.itemconfig(iSText, text=iS)
+>>>>>>> 678ea4fa05a58866e37908d972fe4501bb4025cd
 
 def motion():
 	global birdY, flyToggle
@@ -69,12 +85,20 @@ def motion():
 		background.coords(bird, 100, birdY)
 	if (pipelineX < -100): # pipelines
 		pipelineX = 500
+<<<<<<< HEAD
 		temp = [pipelineY - 160, pipelineY + 160] # must correct random impossible challenges
+=======
+		temp = [max(pipelineY - 160, 0), min(pipelineY + 160, 350)] # must correct random impossible challenges
+>>>>>>> 678ea4fa05a58866e37908d972fe4501bb4025cd
 		pipelineY = random.randint(0, 350)
 	else:
 		pipelineX -= 5
 	if (birdX < pipelineX and (birdX + 9) >= pipelineX): # increment score
 		iS += 1
+<<<<<<< HEAD
+=======
+		background.itemconfig(iSText, text=iS)
+>>>>>>> 678ea4fa05a58866e37908d972fe4501bb4025cd
 	if ((birdX + 21) >= pipelineX and birdX <= (pipelineX + 70)): # collisions
 		if ((birdY - 17) <= pipelineY or (birdY + 17) >= (pipelineY + 100)):
 			restart(0)
