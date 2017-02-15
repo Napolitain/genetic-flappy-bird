@@ -6,7 +6,7 @@
 # imports
 import tkinter
 import random
-import json, binascii, codecs
+import json, base64, codecs
 
 # initialisation
 window = tkinter.Tk()
@@ -33,7 +33,7 @@ iSText = background.create_text(230, 50, fill="white", font="Times 50 bold", tex
 try:
 	with open('stats.json', 'r') as f:
 		temp = f.read()
-		temp = codecs.decode(binascii.unhexlify(codecs.encode(temp)))
+		temp = codecs.decode(base64.b85decode(codecs.encode(temp)))
 		temp = json.loads(temp)
 		iS, bS, nG = 0, temp['bestScore'], temp['numberGames']
 except:
@@ -56,7 +56,7 @@ def restart(event):
 		bS = iS
 	with open('stats.json', 'w+') as f: # write to stats.json
 		temp = json.dumps({'bestScore':bS, 'numberGames':nG})
-		temp = codecs.decode(binascii.hexlify(codecs.encode(temp)))
+		temp = codecs.decode(base64.b85encode(codecs.encode(temp)))
 		f.write(temp)
 	print('Reboot: %i\nScore: %i\nBest: %i\n' % (nG, iS, bS))
 	nG += 1 # update number of games
