@@ -6,4 +6,6 @@
 ###### Even if it is a homework, we aim to complete the project as well as we could.
 ###### We are two teenagers interested by IT and we are quite autonomous, but any advices concerning the AI is welcome ;)
 
+![](https://gitlab.com/Napolitain/genetic-flappy-bird/blob/master/ingame.png)
+
 ###### Sources from official docs and https://github.com/potterua/flappy-bird/blob/master/game.py
