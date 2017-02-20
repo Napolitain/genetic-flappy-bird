@@ -1,8 +1,5 @@
 #! python3
 
-# Flappy Bird avec intelligence artificielle par génétique
-# Inspiration de https://github.com/potterua/flappy-bird/blob/master/game.py et des docs officielles (essentiellement pour les méthodes utiles)
-
 # imports
 import tkinter
 import random
