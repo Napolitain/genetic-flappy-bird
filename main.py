@@ -25,7 +25,9 @@ pipelineY = 150
 pipelineTop = background.create_rectangle(pipelineX, 0, pipelineX + 70, pipelineY, fill="#7B2", outline="#7B2")
 pipelineBottom = background.create_rectangle(pipelineX, pipelineY + 100, pipelineX + 70, 500, fill="#7B2", outline="#7B2")
 
-iSText = background.create_text(230, 50, fill="white", font="Times 50 bold", text="0")
+iSText = background.create_text(230, 50, fill="white", font="Times 50 bold", text="0") # instant score text
+byText = background.create_text(30, 440, fill="white", font="Times 15 bold", text=str(birdY)) # bird y text
+pyText = background.create_text(30, 460, fill="white", font="Times 15 bold", text=str(pipelineY)) # pipeline y text
 
 try:
 	with open('stats.json', 'r') as f:
@@ -67,14 +69,17 @@ def motion():
 	if (birdY < 470 and flyToggle <= 0): # gravity effect
 		birdY += 4
 		background.coords(bird, 100, birdY)
+		background.itemconfig(byText, text=str(birdY))
 	if (birdY > 30 and flyToggle > 0): # fly
 		birdY -= 4
 		flyToggle -= 1
 		background.coords(bird, 100, birdY)
+		background.itemconfig(byText, text=str(birdY))
 	if (pipelineX < -100): # pipelines
 		pipelineX = 500
 		temp = [max(pipelineY - 160, 0), min(pipelineY + 160, 350)] # must correct random impossible challenges
-		pipelineY = random.randint(0, 350)
+		pipelineY = random.randint(50, 350) # (0, 350)
+		background.itemconfig(pyText, text=str(pipelineY))
 	else:
 		pipelineX -= 5
 	if (birdX < pipelineX and (birdX + 9) >= pipelineX): # increment score
