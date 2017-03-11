@@ -1,16 +1,19 @@
-# **Flappy bird in python**
+** Présentation
 
-###### Il s'agit d'un jeu Flappy Bird codé en Python (GUI avec Tkinter).
-###### Le but de ce projet d'intelligence artificielle est de nous permettre d'apprendre les bases de la programmation d'IA.
-###### A la fin de ce projet l'oiseau doit être capable d'affectuer un score satisfaisant et au dela de nos performances humains.
+Ce programmme est une intelligence artificielle de Flappy bird codé en Python 3 (GUI avec Tkinter).
+Le programme est composé en deux parties :
+- Un jeu Flappy Bird
+- Un aglorithme génétique
 
-###### Même si c'est un projet scolaire nous essayerons de compléter le projet au temps que possible après le Bac.
+Le but de ce projet d'intelligence artificielle est de nous permettre d'apprendre les bases de la programmation d'IA.
+A la fin de ce projet l'oiseau doit être capable d'affectuer un score satisfaisant et au dela de nos performances humains.
 
 
-![image](https://gitlab.com/Napolitain/genetic-flappy-bird/raw/master/ingame.png)
+![Image du jeu](https://gitlab.com/Napolitain/genetic-flappy-bird/raw/master/ingame.png)
 
-######  https://github.com/potterua/flappy-bird/blob/master/game.py
+** Sources d'inspirations
+- https://github.com/potterua/flappy-bird/blob/master/game.py
 
-###### Projet fait par Maxime Boucher et Sylvain Reynaud en Terminale S au Lycée Jean Jaurès
-
-###### We are two teenagers interested by IT and we are quite autonomous, but any advices concerning the AI is welcome ;)
+** Contributions
+Projet mené par Maxime Boucher et Sylvain Reynaud en Terminale S au Lycée Jean Jaurès
+Nous sommes deux jeunes passionnés par la technologie, nous sommes plutôt autonome mais vos conseils concernant l'IA est la bienvenue ;)
