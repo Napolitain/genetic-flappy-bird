@@ -1,4 +1,4 @@
-** Présentation
+## Présentation
 
 Ce programmme est une intelligence artificielle de Flappy bird codé en Python 3 (GUI avec Tkinter).
 Le programme est composé en deux parties :
@@ -11,9 +11,9 @@ A la fin de ce projet l'oiseau doit être capable d'affectuer un score satisfais
 
 ![Image du jeu](https://gitlab.com/Napolitain/genetic-flappy-bird/raw/master/ingame.png)
 
-** Sources d'inspirations
+## Sources d'inspirations
 - https://github.com/potterua/flappy-bird/blob/master/game.py
 
-** Contributions
+## Contributions
 Projet mené par Maxime Boucher et Sylvain Reynaud en Terminale S au Lycée Jean Jaurès
 Nous sommes deux jeunes passionnés par la technologie, nous sommes plutôt autonome mais vos conseils concernant l'IA est la bienvenue ;)
