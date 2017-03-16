@@ -1,15 +1,15 @@
 ## Présentation
 
-Ce programmme est une intelligence artificielle de Flappy bird codé en Python 3 (GUI avec Tkinter).
+Ce programme est une intelligence artificielle de Flappy bird codé en Python 3 (GUI avec Tkinter).
 Le programme est composé en deux parties :
 - Un jeu Flappy Bird
-- Un aglorithme génétique
+- Un algorithme génétique
 
 Le but de ce projet d'intelligence artificielle est de nous permettre d'apprendre les bases de la programmation d'IA.
 A la fin de ce projet l'oiseau doit être capable d'affectuer un score satisfaisant et au dela de nos performances humains.
 
 
-![Image du jeu](https://gitlab.com/Napolitain/genetic-flappy-bird/raw/master/ingame.png)
+![Image du jeu](https://gitlab.com/Napolitain/genetic-flappy-bird/raw/master/img/ingame.png)
 
 ## Sources d'inspirations
 - https://github.com/potterua/flappy-bird/blob/master/game.py
