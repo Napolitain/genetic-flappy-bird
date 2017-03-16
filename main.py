@@ -14,7 +14,7 @@ window.geometry("500x500")
 background = tkinter.Canvas(window, width = 500, height = 500, background = "#4CC", bd=0, highlightthickness=0)
 background.pack()
 
-birdImg = tkinter.PhotoImage(file="bird5.png")
+birdImg = tkinter.PhotoImage(file="img/bird5.png")
 birdX = 100
 birdY = 250
 bird = background.create_image(birdX, birdY, image=birdImg) # (x, y, source)

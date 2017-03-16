@@ -9,7 +9,7 @@ Le but de ce projet d'intelligence artificielle est de nous permettre d'apprendr
 A la fin de ce projet l'oiseau doit être capable d'affectuer un score satisfaisant et au dela de nos performances humains.
 
 
-![Image du jeu](https://gitlab.com/Napolitain/genetic-flappy-bird/raw/master/ingame.png)
+![Image du jeu](https://gitlab.com/Napolitain/genetic-flappy-bird/raw/master/img/ingame.png)
 
 ## Sources d'inspirations
 - https://github.com/potterua/flappy-bird/blob/master/game.py
