@@ -1,6 +1,6 @@
 #! python3
 
-# imports
+# import de librairies
 import tkinter
 import random
 import json, base64, codecs
@@ -14,7 +14,7 @@ window.geometry("500x500")
 background = tkinter.Canvas(window, width = 500, height = 500, background = "#4CC", bd=0, highlightthickness=0)
 background.pack()
 
-birdImg = tkinter.PhotoImage(file="bird5.png")
+birdImg = tkinter.PhotoImage(file="img/bird5.png")
 birdX = 100
 birdY = 250
 bird = background.create_image(birdX, birdY, image=birdImg) # (x, y, source)
@@ -25,10 +25,10 @@ pipelineY = 150
 pipelineTop = background.create_rectangle(pipelineX, 0, pipelineX + 70, pipelineY, fill="#7B2", outline="#7B2")
 pipelineBottom = background.create_rectangle(pipelineX, pipelineY + 100, pipelineX + 70, 500, fill="#7B2", outline="#7B2")
 
-iSText = background.create_text(230, 50, fill="white", font="Times 50 bold", text="0") # instant score text
-byText = background.create_text(50, 430, fill="white", font="Times 15 bold", text="hb: " + str(birdY)) # bird y text
-pyText = background.create_text(50, 450, fill="white", font="Times 15 bold", text="hp: " + str(pipelineY+100)) # pipeline y text
-differenceText = background.create_text(50, 470, fill="white", font="Times 15 bold", text="h: " + str(birdY-(pipelineY+100))) # difference h
+iSText = background.create_text(230, 50, fill="white", font="Times 50 bold", text="0") # texte score actuel
+byText = background.create_text(50, 430, fill="white", font="Times 15 bold", text="hb: " + str(birdY)) # position y oiseau
+pyText = background.create_text(50, 450, fill="white", font="Times 15 bold", text="hp: " + str(pipelineY+100)) # position y pipeline du bas
+differenceText = background.create_text(50, 470, fill="white", font="Times 15 bold", text="h: " + str(birdY-(pipelineY+100))) # difference de hauteur
 
 try:
 	with open('stats.json', 'r') as f:
@@ -39,7 +39,7 @@ try:
 except:
 	iS, bS, nG = 0, 0, 1
 
-# functions
+# fonctions
 def restart(event):
 	global birdX, birdY
 	global pipelineX, pipelineY
@@ -63,7 +63,7 @@ def restart(event):
 	iS = 0 # reset instant score
 	background.itemconfig(iSText, text=iS)
 
-def motion():
+def motion(): # fonction principale
 	global birdY, flyToggle
 	global pipelineX, pipelineY
 	global iS
@@ -80,8 +80,7 @@ def motion():
 		background.itemconfig(differenceText, text="h: " + str(birdY-(pipelineY+100)))
 	if (pipelineX < -100): # pipelines
 		pipelineX = 500
-		temp = [max(pipelineY - 160, 0), min(pipelineY + 160, 350)] # cas impossibles à régler
-		pipelineY = random.randint(50, 350) # (0, 350)
+		pipelineY = random.randint(max(pipelineY - 160, 0), min(pipelineY + 160, 350)) # (0, 350) avant, maintenant cas impossibles bannis
 		background.itemconfig(pyText, text="hp: " + str(pipelineY+100))
 	else:
 		pipelineX -= 5

@@ -4,6 +4,7 @@
 import tkinter
 import random
 import json, base64, codecs
+import time
 
 # initialisation
 window = tkinter.Tk()
