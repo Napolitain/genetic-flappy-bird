@@ -1,11 +1,19 @@
-# **Flappy bird in python**
+## Présentation
 
-###### This is a basic flappy bird alike game made with Python and Tkinter.
-###### That said, we want to build an AI to learn basics of artificial intelligence, that would in this case always be better than the player.
+Ce programmme est une intelligence artificielle de Flappy bird codé en Python 3 (GUI avec Tkinter).
+Le programme est composé en deux parties :
+- Un jeu Flappy Bird
+- Un algorithme génétique
 
-###### Even if it is a homework, we aim to complete the project as well as we could.
-###### We are two teenagers interested by IT and we are quite autonomous, but any advices concerning the AI is welcome ;)
+Le but de ce projet d'intelligence artificielle est de nous permettre d'apprendre les bases de la programmation d'IA.
+A la fin de ce projet l'oiseau doit être capable d'affectuer un score satisfaisant et au dela de nos performances humains.
 
-![image](https://gitlab.com/Napolitain/genetic-flappy-bird/raw/master/ingame.png)
 
-###### Sources from official docs and https://github.com/potterua/flappy-bird/blob/master/game.py
+![Image du jeu](https://gitlab.com/Napolitain/genetic-flappy-bird/raw/master/ingame.png)
+
+## Sources d'inspirations
+- https://github.com/potterua/flappy-bird/blob/master/game.py
+
+## Contributions
+Projet mené par Maxime Boucher et Sylvain Reynaud en Terminale S au Lycée Jean Jaurès
+Nous sommes deux jeunes passionnés par la technologie, nous sommes plutôt autonome mais vos conseils concernant l'IA est la bienvenue ;)
