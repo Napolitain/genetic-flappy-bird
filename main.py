@@ -1,6 +1,6 @@
 #! python3
 
-# imports
+# import de librairies
 import tkinter
 import random
 import json, base64, codecs
@@ -25,9 +25,10 @@ pipelineY = 150
 pipelineTop = background.create_rectangle(pipelineX, 0, pipelineX + 70, pipelineY, fill="#7B2", outline="#7B2")
 pipelineBottom = background.create_rectangle(pipelineX, pipelineY + 100, pipelineX + 70, 500, fill="#7B2", outline="#7B2")
 
-iSText = background.create_text(230, 50, fill="white", font="Times 50 bold", text="0") # instant score text
-byText = background.create_text(30, 440, fill="white", font="Times 15 bold", text=str(birdY)) # bird y text
-pyText = background.create_text(30, 460, fill="white", font="Times 15 bold", text=str(pipelineY)) # pipeline y text
+iSText = background.create_text(230, 50, fill="white", font="Times 50 bold", text="0") # texte score actuel
+byText = background.create_text(50, 430, fill="white", font="Times 15 bold", text="hb: " + str(birdY)) # position y oiseau
+pyText = background.create_text(50, 450, fill="white", font="Times 15 bold", text="hp: " + str(pipelineY+100)) # position y pipeline du bas
+differenceText = background.create_text(50, 470, fill="white", font="Times 15 bold", text="h: " + str(birdY-(pipelineY+100))) # difference de hauteur
 
 try:
 	with open('stats.json', 'r') as f:
@@ -38,7 +39,7 @@ try:
 except:
 	iS, bS, nG = 0, 0, 1
 
-# functions
+# fonctions
 def restart(event):
 	global birdX, birdY
 	global pipelineX, pipelineY
@@ -58,31 +59,32 @@ def restart(event):
 		temp = codecs.decode(base64.b85encode(codecs.encode(temp)))
 		f.write(temp)
 	print('Reboot: %i\nScore: %i\nBest: %i\n' % (nG, iS, bS))
-	nG += 1 # update number of games
+	nG += 1 # incrémente le nombre de parties
 	iS = 0 # reset instant score
 	background.itemconfig(iSText, text=iS)
 
-def motion():
+def motion(): # fonction principale
 	global birdY, flyToggle
 	global pipelineX, pipelineY
 	global iS
-	if (birdY < 470 and flyToggle <= 0): # gravity effect
+	if (birdY < 470 and flyToggle <= 0): # effet de gravité
 		birdY += 4
 		background.coords(bird, 100, birdY)
-		background.itemconfig(byText, text=str(birdY))
-	if (birdY > 30 and flyToggle > 0): # fly
+		background.itemconfig(byText, text="hb: " + str(birdY))
+		background.itemconfig(differenceText, text="h: " + str(birdY-(pipelineY+100)))
+	if (birdY > 30 and flyToggle > 0): # vole
 		birdY -= 4
 		flyToggle -= 1
 		background.coords(bird, 100, birdY)
-		background.itemconfig(byText, text=str(birdY))
+		background.itemconfig(byText, text="hb: " + str(birdY))
+		background.itemconfig(differenceText, text="h: " + str(birdY-(pipelineY+100)))
 	if (pipelineX < -100): # pipelines
 		pipelineX = 500
-		temp = [max(pipelineY - 160, 0), min(pipelineY + 160, 350)] # must correct random impossible challenges
-		pipelineY = random.randint(50, 350) # (0, 350)
-		background.itemconfig(pyText, text=str(pipelineY))
+		pipelineY = random.randint(max(pipelineY - 160, 0), min(pipelineY + 160, 350)) # (0, 350) avant, maintenant cas impossibles bannis
+		background.itemconfig(pyText, text="hp: " + str(pipelineY+100))
 	else:
 		pipelineX -= 5
-	if (birdX < pipelineX and (birdX + 9) >= pipelineX): # increment score
+	if (birdX < pipelineX and (birdX + 9) >= pipelineX): # incrémente le score
 		iS += 1
 		background.itemconfig(iSText, text=iS)
 	if ((birdX + 21) >= pipelineX and birdX <= (pipelineX + 70)): # collisions
@@ -91,9 +93,9 @@ def motion():
 			return False
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
 	background.coords(pipelineBottom, pipelineX, pipelineY + 100, pipelineX + 70, 500)
-	window.after(10, motion) # infinite callback / 100 frames per sec
+	window.after(10, motion) # boucle infinie, 100 images par secondes
 
-def fly(event): # enable fly anti gravity effect
+def fly(event): # active l'action de voler
 	global flyToggle
 	flyToggle = 10
 
