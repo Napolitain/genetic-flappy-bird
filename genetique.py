@@ -1,11 +1,5 @@
 import random
 
-global POPULATION # nombre d'individu en test a la fois
-global HAUTEUR_MIN
-global HAUTEUR_MAX
-global DISTANCE_MIN
-global DISTANCE_MAX
-global g0, g1, g2, g3, g4, g5, g6, g7, g8, g9
 
 TAUX_MUTATION = 0.1
 POPULATION = 10
