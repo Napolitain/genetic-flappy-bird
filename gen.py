@@ -32,8 +32,8 @@ class Genome:
 		self.score = score
 
 	def mutation(self): # Retourne le genome mute
-		return Genome(self.h+random.uniform(HAUTEUR_MIN*TAUX_MUTATION, HAUTEUR_MAX*TAUX_MUTATION),\
-		 self.d+random.uniform(DISTANCE_MIN*TAUX_MUTATION, DISTANCE_MAX*TAUX_MUTATION))
+		return Genome(int(self.hauteurNode+random.uniform(HAUTEUR_MIN*TAUX_MUTATION, HAUTEUR_MAX*TAUX_MUTATION)),\
+		 int(self.distanceNode+random.uniform(DISTANCE_MIN*TAUX_MUTATION, DISTANCE_MAX*TAUX_MUTATION)))
 
 	def getdistancenode(self): # Retourne la distance
 		return self.distanceNode
@@ -56,10 +56,10 @@ class Genome:
 
 
 def randomHauteur(): # Donne une hauteur aleatoire
-	return random.uniform(HAUTEUR_MIN, HAUTEUR_MAX);
+	return int(random.uniform(HAUTEUR_MIN, HAUTEUR_MAX));
 
 def randomDistance(): # Donne une distance aleatoire
-	return random.uniform(DISTANCE_MIN, DISTANCE_MAX);
+	return int(random.uniform(DISTANCE_MIN, DISTANCE_MAX));
 	
 
 # Generation d'un genome
@@ -69,20 +69,11 @@ def genGenome(bestG = 0):
 	else:
 		return bestG.mutation()
 
-'''
+
 ### TESTS ###
 
 g1 = genGenome()
 g1.showinfo()
 
-g1.sethauteuractu(10)
-g1.sethauteurnode(23)
-g1.setdistancenode(39)
-g1.setdistanceactu(21)
-
-print(g1.gethauteuractu())
-print(g1.getdistanceactu())
-print(g1.gethauteurnode())
-print(g1.getdistancenode())
-
-'''
+g1 = g1.mutation()
+g1.showinfo()
