@@ -14,7 +14,7 @@ class Genome:
 		self.distanceNode = d
 		self.distanceActu = 0 # distance actuelle de l'oiseau sur le plan du jeu
 		self.hauteurActu = 0 # hauteur actuelle de l'oiseau sur le plan du jeu
-		self.score = 0 # Score maximum du génome
+		self.score = 0 # Score maximum du genome
 
 	def setdistancenode(self, d): # definit la node distance
 		self.distanceNode = d
