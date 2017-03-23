@@ -5,7 +5,7 @@ import tkinter
 import random
 import json, base64, codecs
 import time
-import genetique
+import gen
 
 # initialisation
 window = tkinter.Tk()
