@@ -59,10 +59,10 @@ class Genome:
 		return self.hauteur
 
 	def getdistanceactu(self, d): # Retourne la distance actuelle
-		self.distanceActu = d
+		return self.distanceActu
 
 	def gethauteuractu(self, h): # Retourne la node hauteur actuelle
-		self.hauteurActu = h
+		return self.hauteurActu
 
 	def showinfo(self): # Afficher des informations sur le genome
 		print("Hauteur : ", self.hauteur, "\nDistance : ", self.distance, "\nScore :", self.score)
