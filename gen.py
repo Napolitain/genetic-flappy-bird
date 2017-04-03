@@ -3,12 +3,10 @@
 import random
 
 TAUX_MUTATION = 0.1
-POPULATION = 10
 HAUTEUR_MIN = 0
 HAUTEUR_MAX = 500
 DISTANCE_MIN = 0
 DISTANCE_MAX = 300
-
 
 class Genome:
 	def __init__(self, h, d):
@@ -33,9 +31,12 @@ class Genome:
 	def setscore(self, score): # definit le score
 		self.score = score
 
-	def mutation(self): # Retourne le genome mute
-		return Genome(self.h+random.uniform(HAUTEUR_MIN*TAUX_MUTATION, HAUTEUR_MAX*TAUX_MUTATION),\
-		 self.d+random.uniform(DISTANCE_MIN*TAUX_MUTATION, DISTANCE_MAX*TAUX_MUTATION))
+	def mutate(self): # Retourne le genome mute
+		return Genome(self.hauteurNode+random.uniform(HAUTEUR_MIN*TAUX_MUTATION, HAUTEUR_MAX*TAUX_MUTATION),\
+		 self.distanceNode+random.uniform(DISTANCE_MIN*TAUX_MUTATION, DISTANCE_MAX*TAUX_MUTATION))
+
+	def crossover(self, other): # retourne le genome retrouve par association avec un autre
+		return Genome((self.h+other.h)/2, (self.d+other.d)/2)
 
 	def getdistancenode(self): # Retourne la distance
 		return self.distanceNode
@@ -64,7 +65,7 @@ def randomDistance(): # Donne une distance aleatoire
 
 # Generation d'un genome
 def genGenome(bestG = 0):
-	if bestG == 0:
+	if (bestG == 0):
 		return Genome(randomHauteur(), randomDistance())
 	else:
-		return bestG.mutation()
+		return bestG.mutate()

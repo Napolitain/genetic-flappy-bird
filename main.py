@@ -20,6 +20,7 @@ background.pack()
 birdImg = tkinter.PhotoImage(file="img/bird5.png")
 birdX = 100
 birdY = 250
+birdFit = 0
 bird = background.create_image(birdX, birdY, image=birdImg) # (x, y, source)
 flyToggle = 0
 IA = True
@@ -51,8 +52,10 @@ def restart(event):
 	global birdX, birdY
 	global pipelineX, pipelineY
 	global iS, bS, nG
+	global g1
 	birdX = 100
 	birdY = 250
+	birdFit = 0
 	pipelineX = 500
 	pipelineY = 150
 	background.coords(bird, 100, birdY)
@@ -68,12 +71,12 @@ def restart(event):
 	nG += 1 # incremente le nombre de parties
 	iS = 0 # reset instant score
 	background.itemconfig(iSText, text=iS)
+	g1 = gen.genGenome()
 
 def motion(): # fonction principale
 	global birdY, flyToggle
 	global pipelineX, pipelineY
 	global iS
-	print(getBirdY())
 	if (birdY < 470 and flyToggle <= 0): # effet de gravite
 		birdY += 4
 		background.coords(bird, 100, birdY)
@@ -95,11 +98,13 @@ def motion(): # fonction principale
 			return False
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
 	background.coords(pipelineBottom, pipelineX, pipelineY + 100, pipelineX + 70, 500)
-	if (IA != False): # avec ia
-		if (ia.doIJump(getBirdY()) == True):
+	if (IA == True): # avec ia
+		print('Hauteur: %i : %i\nDistance: %i : %i\n' % (g1.gethauteurnode(), getBirdY(), g1.getdistancenode(), getBirdX()))
+		if (getBirdY() < g1.gethauteurnode() and getBirdX() > g1.getdistancenode()):
 			fly(0)
-		if int(getBirdX()) in range(int(g1.getdistancenode() - 10), int(g1.getdistancenode() + 10)):
+		if (int(getBirdX()) in range(int(g1.getdistancenode() - 10), int(g1.getdistancenode() + 10))):
 			fly(0)
+	birdFit += 1
 	window.after(20, motion) # boucle infinie, 100 images par secondes
 
 def fly(event = 0): # active l'action de voler
