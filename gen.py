@@ -32,11 +32,11 @@ class Genome:
 		self.score = score
 
 	def mutate(self): # Retourne le genome mute
-		return Genome(self.hauteurNode+random.uniform(HAUTEUR_MIN*TAUX_MUTATION, HAUTEUR_MAX*TAUX_MUTATION),\
-		 self.distanceNode+random.uniform(DISTANCE_MIN*TAUX_MUTATION, DISTANCE_MAX*TAUX_MUTATION))
+		return Genome(self.hauteurNode+random.uniform(-50*TAUX_MUTATION, 50*TAUX_MUTATION),\
+		 self.distanceNode+random.uniform(-50*TAUX_MUTATION, 50*TAUX_MUTATION))
 
 	def crossover(self, other): # retourne le genome retrouve par association avec un autre
-		return Genome((self.h+other.h)/2, (self.d+other.d)/2)
+		return Genome((self.hauteurNode + other.distanceNode)/2, (self.hauteurNode + other.distanceNode)/2)
 
 	def getdistancenode(self): # Retourne la distance
 		return self.distanceNode

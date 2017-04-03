@@ -19,7 +19,7 @@ background.pack()
 
 birdImg = tkinter.PhotoImage(file="img/bird5.png")
 
-POP = 3 # min = 3, max = undefined
+POP = 5 # min = 3, max = undefined
 
 class Population: # definit une population de birds
 	def __init__(self, n):
@@ -42,12 +42,11 @@ class Bird: # definit un oiseau
 	def reset(self):
 		self.X = 100
 		self.Y = 250
-		self.object = background.create_image(self.X, self.Y, image=birdImg) # (x, y, source)
+		background.coords(self.object, self.X, self.Y)
 		self.flyToggle = 0
 		self.alive = True
 		self.fitness = 0
 		self.score = 0
-		self.genome = self.genome.mutate()
 
 	def fly(self):
 		self.flyToggle = 15
@@ -83,15 +82,17 @@ def restart(event):
 	global bS, nG
 	pipelineX = 500
 	pipelineY = 150
-	for bird in population.birds: # delete onscreen, find best
-		if (bird.fitness >= population.elitism['fitness']):
+	for bird in population.birds: # reforme la population
+		if (bird.fitness >= population.elitism['fitness']): # enregistre le meilleur genome
 			population.elitism[1] = bird.genome
-		if (random.randint(0, 1) == 1):
-			bird.reset()
-		else:
-			bird = Bird()
-		population.survivors = POP
-		background.delete(bird.object)
+		bird.reset() # reset
+		if (random.randint(0, 1) == 1): # mutations, aleatoires
+			bird.genome = bird.genome.mutate()
+		'''if (random.randint(0, 2) == 2): # crossover, reproductions
+			bird.genome = gen.Genome(bird.genome.hauteurNode, bird.genome.distanceNode).crossover(population.elitism['genome'])'''
+	if (population.elitism['genome'] != None):
+		population.birds[-1].genome = population.elitism['genome']
+	population.survivors = POP
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
 	background.coords(pipelineBottom, pipelineX, pipelineY + 100, pipelineX + 70, 500)
 	with open('stats.json', 'w+') as f: # write to stats.json
@@ -100,7 +101,7 @@ def restart(event):
 		f.write(temp)
 	nG += 1 # incremente le nombre de parties
 	background.itemconfig(scoreText, text="0")
-	window.after(100, motion)
+	motion()
 
 def motion(): # fonction principale
 	global pipelineX, pipelineY
