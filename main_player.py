@@ -23,7 +23,6 @@ birdY = 250
 birdFit = 0
 bird = background.create_image(birdX, birdY, image=birdImg) # (x, y, source)
 flyToggle = 0
-IA = True
 
 pipelineX = 500
 pipelineY = 150
@@ -98,13 +97,6 @@ def motion(): # fonction principale
 			return False
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
 	background.coords(pipelineBottom, pipelineX, pipelineY + 100, pipelineX + 70, 500)
-	if (IA == True): # avec ia
-		print('Hauteur: %i : %i\nDistance: %i : %i\n' % (g1.gethauteurnode(), getBirdY(), g1.getdistancenode(), getBirdX()))
-		if (getBirdY() < g1.gethauteurnode() and getBirdX() > g1.getdistancenode()):
-			fly(0)
-		if (int(getBirdX()) in range(int(g1.getdistancenode() - 10), int(g1.getdistancenode() + 10))):
-			fly(0)
-	birdFit += 1
 	window.after(20, motion) # boucle infinie, 100 images par secondes
 
 def fly(event = 0): # active l'action de voler

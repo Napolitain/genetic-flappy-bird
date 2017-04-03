@@ -1,12 +1,11 @@
 #! python3
 
 # import de librairies
+from gen import *
 import tkinter
 import random
 import json, base64, codecs
 import time
-import gen
-import ia
 
 # initialisation
 window = tkinter.Tk()
@@ -16,10 +15,7 @@ window.geometry("500x500")
 
 background = tkinter.Canvas(window, width = 500, height = 500, background = "#4CC", bd=0, highlightthickness=0)
 background.pack()
-
 birdImg = tkinter.PhotoImage(file="img/bird5.png")
-
-POP = 10 # min = 3, max = undefined
 
 class Population: # definit une population de birds
 	def __init__(self, n):
@@ -37,7 +33,7 @@ class Bird: # definit un oiseau
 		self.alive = True
 		self.fitness = 0
 		self.score = 0
-		self.genome = gen.genGenome()
+		self.genome = genGenome()
 
 	def reset(self):
 		self.X = 100
@@ -49,7 +45,7 @@ class Bird: # definit un oiseau
 		self.score = 0
 
 	def fly(self):
-		self.flyToggle = 15
+		self.flyToggle = 10
 
 	def getBirdY(self): # hauteur de l'oiseau relative au pipeline
 		return pipelineY + 125 - self.Y
@@ -57,6 +53,7 @@ class Bird: # definit un oiseau
 	def getBirdX(self): # distance de l'oiseau relative au pipeline
 		return pipelineX - self.X
 
+POP = 10 # min = 3, max = 50+
 population = Population(POP)
 
 pipelineX = 500
@@ -90,9 +87,9 @@ def restart(event):
 		if (random.randint(0, 1) == 1): # mutations legeres tous les 1/2
 			bird.genome = bird.genome.mutate()
 		if (random.randint(0, 2) == 2): # crossover tous les 1/3
-			bird.genome = gen.Genome(bird.genome.hauteurNode, bird.genome.distanceNode).crossover(population.elitism['genome'])
+			bird.genome = Genome(bird.genome.hauteurNode, bird.genome.distanceNode).crossover(population.elitism['genome'])
 		if (random.randint(0, 3) == 3): # mutations importantes tous les 1/4
-			bird.genome = gen.genGenome()
+			bird.genome = genGenome()
 	if (population.elitism['genome'] != None):
 		population.birds[0].genome = population.elitism['genome']
 	population.survivors = POP
@@ -118,8 +115,8 @@ def motion(): # fonction principale
 			if (bird.Y < 470 and bird.flyToggle <= 0): # effet de gravite
 				bird.Y += 4
 				background.coords(bird.object, 100, bird.Y)
-			if (bird.Y > 30 and bird.flyToggle > 0): # vole
-				bird.Y -= 4.5 # 4.5 * 15 = 67.5
+			if (bird.flyToggle > 0): # vole
+				bird.Y -= 5 # 4.5 * 15 = 67.5
 				bird.flyToggle -= 1
 				background.coords(bird.object, 100, bird.Y)
 			if (bird.X < pipelineX and (bird.X + 9) >= pipelineX): # incremente le score
