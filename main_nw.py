@@ -19,7 +19,7 @@ background.pack()
 
 birdImg = tkinter.PhotoImage(file="img/bird5.png")
 
-POP = 5 # min = 3, max = undefined
+POP = 10 # min = 3, max = undefined
 
 class Population: # definit une population de birds
 	def __init__(self, n):
@@ -84,14 +84,17 @@ def restart(event):
 	pipelineY = 150
 	for bird in population.birds: # reforme la population
 		if (bird.fitness >= population.elitism['fitness']): # enregistre le meilleur genome
-			population.elitism[1] = bird.genome
+			population.elitism['fitness'] = bird.fitness
+			population.elitism['genome'] = bird.genome
 		bird.reset() # reset
-		if (random.randint(0, 1) == 1): # mutations, aleatoires
+		if (random.randint(0, 1) == 1): # mutations legeres tous les 1/2
 			bird.genome = bird.genome.mutate()
-		'''if (random.randint(0, 2) == 2): # crossover, reproductions
-			bird.genome = gen.Genome(bird.genome.hauteurNode, bird.genome.distanceNode).crossover(population.elitism['genome'])'''
+		if (random.randint(0, 2) == 2): # crossover tous les 1/3
+			bird.genome = gen.Genome(bird.genome.hauteurNode, bird.genome.distanceNode).crossover(population.elitism['genome'])
+		if (random.randint(0, 3) == 3): # mutations importantes tous les 1/4
+			bird.genome = gen.genGenome()
 	if (population.elitism['genome'] != None):
-		population.birds[-1].genome = population.elitism['genome']
+		population.birds[0].genome = population.elitism['genome']
 	population.survivors = POP
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
 	background.coords(pipelineBottom, pipelineX, pipelineY + 100, pipelineX + 70, 500)
@@ -106,7 +109,7 @@ def restart(event):
 def motion(): # fonction principale
 	global pipelineX, pipelineY
 	global population
-	print([bird.fitness for bird in population.birds])
+	print([bird.fitness for bird in population.birds], population.best, population.elitism['fitness'])
 	if (population.survivors <= 0):
 		restart(0)
 		return False
