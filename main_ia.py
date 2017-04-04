@@ -86,9 +86,9 @@ def restart(event):
 		bird.reset() # reset
 		if (random.randint(0, 1) == 1): # mutations legeres tous les 1/2
 			bird.genome = bird.genome.mutate()
-		if (random.randint(0, 2) == 2): # crossover tous les 1/3
+		if (random.randint(0, 2) == 2): # crossover tous les 1/2
 			bird.genome = Genome(bird.genome.hauteurNode, bird.genome.distanceNode).crossover(population.elitism['genome'])
-		if (random.randint(0, 3) == 3): # mutations importantes tous les 1/4
+		if (random.randint(0, 3) == 3): # mutations importantes tous les 1/4 (reset)
 			bird.genome = genGenome()
 	if (population.elitism['genome'] != None):
 		population.birds[0].genome = population.elitism['genome']
@@ -127,7 +127,7 @@ def motion(): # fonction principale
 					bird.alive = False
 					population.survivors -= 1
 			bird.fitness += 1
-			if (bird.getBirdY() < bird.genome.gethauteurnode() and bird.getBirdX() > bird.genome.getdistancenode()): # IA
+			if (bird.getBirdY() < bird.genome.gethauteurnode()): # IA
 				bird.fly()
 		else: # bird stick to pipeline when dead
 			bird.X -= 5
