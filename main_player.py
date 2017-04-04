@@ -5,8 +5,6 @@ import tkinter
 import random
 import json, base64, codecs
 import time
-import gen
-import ia
 
 # initialisation
 window = tkinter.Tk()
@@ -54,7 +52,6 @@ def restart(event):
 	global g1
 	birdX = 100
 	birdY = 250
-	birdFit = 0
 	pipelineX = 500
 	pipelineY = 150
 	background.coords(bird, 100, birdY)
@@ -70,7 +67,6 @@ def restart(event):
 	nG += 1 # incremente le nombre de parties
 	iS = 0 # reset instant score
 	background.itemconfig(iSText, text=iS)
-	g1 = gen.genGenome()
 
 def motion(): # fonction principale
 	global birdY, flyToggle
@@ -80,7 +76,7 @@ def motion(): # fonction principale
 		birdY += 4
 		background.coords(bird, 100, birdY)
 	if (birdY > 30 and flyToggle > 0): # vole
-		birdY -= 4.5 # 4.5 * 15 = 67.5
+		birdY -= 5 # 4.5 * 15 = 67.5
 		flyToggle -= 1
 		background.coords(bird, 100, birdY)
 	if (pipelineX < -100): # pipelines
@@ -101,10 +97,9 @@ def motion(): # fonction principale
 
 def fly(event = 0): # active l'action de voler
 	global flyToggle
-	flyToggle = 15
+	flyToggle = 10
 
 # run
-g1 = gen.genGenome()
-window.after(10, motion)
+motion()
 window.bind("<space>", fly)
 window.mainloop()

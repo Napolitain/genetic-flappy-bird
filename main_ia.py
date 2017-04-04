@@ -59,7 +59,7 @@ population = Population(POP)
 pipelineX = 500
 pipelineY = 150
 pipelineTop = background.create_rectangle(pipelineX, 0, pipelineX + 70, pipelineY, fill="#7B2", outline="#7B2")
-pipelineBottom = background.create_rectangle(pipelineX, pipelineY + 125, pipelineX + 70, 500, fill="#7B2", outline="#7B2")
+pipelineBottom = background.create_rectangle(pipelineX, pipelineY + 100, pipelineX + 70, 500, fill="#7B2", outline="#7B2")
 
 scoreText = background.create_text(230, 50, fill="white", font="Times 50 bold", text="0") # texte score actuel
 
@@ -92,6 +92,7 @@ def restart(event):
 			bird.genome = genGenome()
 	if (population.elitism['genome'] != None):
 		population.birds[0].genome = population.elitism['genome']
+		population.birds[1].genome = population.elitism['genome'].mutate()
 	population.survivors = POP
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
 	background.coords(pipelineBottom, pipelineX, pipelineY + 100, pipelineX + 70, 500)
@@ -134,7 +135,7 @@ def motion(): # fonction principale
 			background.coords(bird.object, bird.X, bird.Y)
 	if (pipelineX < -100): # pipelines
 		pipelineX = 500
-		pipelineY = random.randint(max(pipelineY - 160, 0), min(pipelineY + 160, 350)) # (0, 350) avant, maintenant cas impossibles bannis
+		pipelineY = random.randint(0, 350) # max(pipelineY - 160, 0), min(pipelineY + 160, 350) pour bannir tous cas impossibles
 	else:
 		pipelineX -= 5
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
