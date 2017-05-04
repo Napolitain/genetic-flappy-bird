@@ -101,7 +101,7 @@ def restart(event):
 		population.birds[1].genome = population.elitism['genome'].mutate() # selection sure avec mutation pour assurer une evolution quelconque
 	population.survivors = POP
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
-	background.coords(pipelineBottom, pipelineX, pipelineY + 100, pipelineX + 70, 500)
+	background.coords(pipelineBottom, pipelineX, pipelineY + 80, pipelineX + 70, 500)
 	with open('stats.json', 'w+') as f: # write to stats.json
 		temp = json.dumps({'bestScore':bS, 'numberGames':nG})
 		temp = codecs.decode(base64.b85encode(codecs.encode(temp)))
@@ -133,7 +133,7 @@ def motion(): # fonction principale
 				bird.score += 1
 				background.itemconfig(scoreText, text=bird.score)
 			if ((bird.X + 21) >= pipelineX and bird.X <= (pipelineX + 70)): # collisions
-				if ((bird.Y - 17) <= pipelineY or (bird.Y + 17) >= (pipelineY + 100)):
+				if ((bird.Y - 17) <= pipelineY or (bird.Y + 17) >= (pipelineY + 80)):
 					bird.alive = False
 					population.survivors -= 1
 			bird.fitness += 1
