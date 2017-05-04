@@ -8,6 +8,7 @@ import json, base64, codecs # pour les stats
 import time
 
 # initialisation
+POP_NUM = 1
 window = tkinter.Tk()
 window.resizable(width = False, height = False)
 window.title("Flappy Bird")
@@ -154,7 +155,7 @@ def motion(): # fonction principale
 			updateResult()
 			f.write(result)
 		return False
-	window.after(20, motion) # boucle infinie, 100 images par secondes
+	window.after(1000/60, motion) # boucle infinie, 1000/x img par secondes (ex: 1000/50, 1000/150 1000/500)
 
 # run
 motion()
