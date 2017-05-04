@@ -62,7 +62,7 @@ result = ''
 pipelineX = 500
 pipelineY = 150
 pipelineTop = background.create_rectangle(pipelineX, 0, pipelineX + 70, pipelineY, fill="#7B2", outline="#7B2")
-pipelineBottom = background.create_rectangle(pipelineX, pipelineY + 100, pipelineX + 70, 500, fill="#7B2", outline="#7B2")
+pipelineBottom = background.create_rectangle(pipelineX, pipelineY + 80, pipelineX + 70, 500, fill="#7B2", outline="#7B2")
 
 scoreText = background.create_text(230, 50, fill="white", font="Times 50 bold", text="0") # texte score actuel
 popText = background.create_text(60, 485, fill="white", font="Times 12 bold", text="Population n° 1") # texte population actuelle
@@ -90,13 +90,12 @@ def restart(event):
 		if (bird.fitness >= population.elitism['fitness']): # enregistre le meilleur genome (elitism)
 			population.elitism['fitness'] = bird.fitness
 			population.elitism['genome'] = bird.genome
-		bird.reset() # reset
-		if (random.randint(0, 1) == 0): # mutations legeres tous les 1/2
-			bird.genome = bird.genome.mutate()
-		if (random.randint(0, 1) == 0): # crossover tous les 1/2
-			bird.genome = Genome(bird.genome.hauteurNode, bird.genome.distanceNode).crossover(population.elitism['genome'])
-		if (random.randint(0, 2) == 0 and bird.fitness < population.elitism['fitness']): # mutations importantes tous les 1/4 (reset)
+		bird.reset() # reset (coordonnees)
+		if (population.elitism['fitness'] < 100):
 			bird.genome = genGenome()
+		else:
+			bird.genome = bird.genome.mutate()
+			bird.genome = Genome(bird.genome.hauteurNode).crossover(population.elitism['genome'])
 	if (population.elitism['genome'] != None):
 		population.birds[0].genome = population.elitism['genome'] # selection sure (sans mutation) pour eviter une mauvaise evolution
 		population.birds[1].genome = population.elitism['genome'].mutate() # selection sure avec mutation pour assurer une evolution quelconque
@@ -138,7 +137,7 @@ def motion(): # fonction principale
 					bird.alive = False
 					population.survivors -= 1
 			bird.fitness += 1
-			if (bird.getBirdY() < bird.genome.gethauteurnode()): # IA
+			if (bird.getBirdY() < bird.genome.hauteurNode): # IA
 				bird.fly()
 		else: # bird stick to pipeline when dead
 			bird.X -= 5
@@ -149,13 +148,13 @@ def motion(): # fonction principale
 	else:
 		pipelineX -= 5
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
-	background.coords(pipelineBottom, pipelineX, pipelineY + 100, pipelineX + 70, 500)
+	background.coords(pipelineBottom, pipelineX, pipelineY + 80, pipelineX + 70, 500)
 	if (time.time() - endMarker > 180): # pour ecrire des resultats statistiques
-		with open('result.json', 'w') as f:
+		with open('result.txt', 'w') as f:
 			updateResult()
 			f.write(result)
 		return False
-	window.after(1000/60, motion) # boucle infinie, 1000/x img par secondes (ex: 1000/50, 1000/150 1000/500)
+	window.after(int(1000/150), motion) # boucle infinie, 1000/x img par secondes (ex: 1000/50, 1000/150 1000/500)
 
 # run
 motion()
