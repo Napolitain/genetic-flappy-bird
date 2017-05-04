@@ -2,12 +2,13 @@
 
 # import de librairies
 from gen import *
-import tkinter
-import random
-import json, base64, codecs
+import tkinter # GUI
+import random # fonctions aleatoires
+import json, base64, codecs # pour les stats
 import time
 
 # initialisation
+POP_NUM = 1
 window = tkinter.Tk()
 window.resizable(width = False, height = False)
 window.title("Flappy Bird")
@@ -18,6 +19,7 @@ background.pack()
 birdImg = tkinter.PhotoImage(file="img/bird5.png")
 
 class Population: # definit une population de birds
+
 	def __init__(self, n):
 		self.birds = [Bird() for x in range(n)]
 		self.survivors = n
@@ -53,7 +55,7 @@ class Bird: # definit un oiseau
 	def getBirdX(self): # distance de l'oiseau relative au pipeline
 		return pipelineX - self.X
 
-POP = 10 # min = 3, max = 50+
+POP = 10 # min = 3, max = 50+ <=> Nombre d'oiseaux
 population = Population(POP)
 
 pipelineX = 500
@@ -62,6 +64,7 @@ pipelineTop = background.create_rectangle(pipelineX, 0, pipelineX + 70, pipeline
 pipelineBottom = background.create_rectangle(pipelineX, pipelineY + 100, pipelineX + 70, 500, fill="#7B2", outline="#7B2")
 
 scoreText = background.create_text(230, 50, fill="white", font="Times 50 bold", text="0") # texte score actuel
+popText = background.create_text(60, 485, fill="white", font="Times 12 bold", text="Population n° 1") # texte population actuelle
 
 try:
 	with open('stats.json', 'r') as f:
@@ -74,9 +77,15 @@ except:
 
 # fonctions
 def restart(event):
+	global POP_NUM
 	global population
 	global pipelineX, pipelineY
 	global bS, nG
+
+	POP_NUM += 1
+
+	background.itemconfig(popText, text="Population n° {}".format(POP_NUM)) # Affiche le nombre de pop qui ont vecu
+
 	pipelineX = 500
 	pipelineY = 150
 	for bird in population.birds: # reforme la population
