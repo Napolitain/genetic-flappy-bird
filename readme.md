@@ -6,10 +6,10 @@ Le programme est composé en deux parties :
 - Un algorithme génétique
 
 Le but de ce projet d'intelligence artificielle est de nous permettre d'apprendre les bases de la programmation d'IA.
-A la fin de ce projet l'oiseau doit être capable d'affectuer un score satisfaisant et au dela de nos performances humains.
+A la fin de ce projet l'oiseau doit être capable d'effectuer un score satisfaisant et au delà des performances humaines.
 
 
-![Image du jeu](https://gitlab.com/Napolitain/genetic-flappy-bird/raw/master/img/ingame.png)
+![Image du jeu](https://gitlab.com/Napolitain/genetic-flappy-bird/raw/master/presentation/presentation.png)
 
 ## Sources d'inspirations
 - https://github.com/potterua/flappy-bird/blob/master/game.py
