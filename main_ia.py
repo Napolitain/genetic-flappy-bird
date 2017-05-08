@@ -18,6 +18,7 @@ background = tkinter.Canvas(window, width = 500, height = 500, background = "#4C
 background.pack()
 birdImg = tkinter.PhotoImage(file="img/bird.png")
 
+# ces 2 class sont dans bird.py mais cela ne marche pas encore en import (car il faudrait redefinir les objets tkinter)
 class Population: # definit une population de birds
 	def __init__(self, n):
 		self.birds = [Bird() for x in range(n)]
@@ -56,8 +57,8 @@ class Bird: # definit un oiseau
 
 POP = 10 # min = 3, max = 50+ <=> Nombre d'oiseaux
 POP_NUM = 1 # numero de la population
-HOLE = 90
-population = Population(POP)
+HOLE = 90 # taille en pixels du trou entre les pipes
+population = Population(POP) # designe une population de POP oiseaux (int)
 endMarker = time.time()
 result = ''
 
@@ -69,20 +70,10 @@ pipelineBottom = background.create_rectangle(pipelineX, pipelineY + HOLE, pipeli
 scoreText = background.create_text(230, 50, fill="white", font="Times 50 bold", text="0") # texte score actuel
 popText = background.create_text(60, 485, fill="white", font="Times 12 bold", text="Population n° 1") # texte population actuelle
 
-try:
-	with open('data/stats.json', 'r') as f:
-		temp = f.read()
-		temp = codecs.decode(base64.b85decode(codecs.encode(temp)))
-		temp = json.loads(temp)
-		bS, nG = temp['bestScore'], temp['numberGames']
-except:
-	bS, nG = 0, 1
-
 # fonctions
 def restart(event):
 	global population, POP_NUM
 	global pipelineX, pipelineY
-	global bS, nG, endMarker
 	POP_NUM += 1
 	background.itemconfig(popText, text="Population n° {}".format(POP_NUM)) # Affiche le nombre de pop qui ont vecu
 	pipelineX = 500
@@ -104,11 +95,6 @@ def restart(event):
 	population.survivors = POP
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
 	background.coords(pipelineBottom, pipelineX, pipelineY + HOLE, pipelineX + 70, 500)
-	with open('data/stats.json', 'w+') as f: # write to stats.json
-		temp = json.dumps({'bestScore':bS, 'numberGames':nG})
-		temp = codecs.decode(base64.b85encode(codecs.encode(temp)))
-		f.write(temp)
-	nG += 1 # incremente le nombre de parties
 	background.itemconfig(scoreText, text="0")
 	motion()
 
@@ -128,20 +114,20 @@ def motion(): # fonction principale
 		return False
 	for bird in population.birds:
 		if (bird.alive == True):
-			bird.Y += bird.velocity # update position
-			bird.velocity += 0.25 # gravite
+			bird.Y += bird.velocity # augmente la hauteur par la valeur vitesse
+			bird.velocity += 0.25 # gravite (augmente la vitesse)
 			background.coords(bird.object, 100, bird.Y)
 			if (bird.X < pipelineX and (bird.X + 9) >= pipelineX): # incremente le score
 				bird.score += 1
 				background.itemconfig(scoreText, text=bird.score)
-			if ((bird.X + 21) >= pipelineX and bird.X <= (pipelineX + 70)): # collisions
+			if ((bird.X + 21) >= pipelineX and bird.X <= (pipelineX + 70)): # collisions : l'oiseau est mort
 				if ((bird.Y - 17) <= pipelineY or (bird.Y + 17) >= (pipelineY + HOLE)):
 					bird.alive = False
 					population.survivors -= 1
 			bird.fitness += 1
-			if (bird.getBirdY() < bird.genome.hauteurNode): # IA
+			if (bird.getBirdY() < bird.genome.hauteurNode): # IA : si l'oiseau est en dessous de son node, il saute
 				bird.fly()
-		else: # bird stick to pipeline when dead
+		else: # l'oiseau reste sur le pipe à sa mort (il perds aussi vite que les pipes en X)
 			bird.X -= 5
 			background.coords(bird.object, bird.X, bird.Y)
 	if (pipelineX < -100): # pipelines
