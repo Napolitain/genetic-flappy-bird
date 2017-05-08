@@ -12,23 +12,23 @@ class Bird: # definit un oiseau
 		self.X = 100
 		self.Y = 250
 		self.object = background.create_image(self.X, self.Y, image=birdImg) # (x, y, source)
-		self.flyToggle = 0
 		self.alive = True
 		self.fitness = 0
 		self.score = 0
 		self.genome = genGenome()
+		self.velocity = 0
 
 	def reset(self):
 		self.X = 100
 		self.Y = 250
 		background.coords(self.object, self.X, self.Y)
-		self.flyToggle = 0
 		self.alive = True
 		self.fitness = 0
 		self.score = 0
+		self.velocity = 0
 
 	def fly(self):
-		self.flyToggle = 10
+		self.velocity = -4.75
 
 	def getBirdY(self): # hauteur de l'oiseau relative au pipeline
 		return pipelineY + 125 - self.Y

@@ -8,7 +8,6 @@ import json, base64, codecs # pour les stats
 import time
 
 # initialisation
-POP_NUM = 1
 window = tkinter.Tk()
 window.resizable(width = False, height = False)
 window.title("Flappy Bird")
@@ -16,7 +15,7 @@ window.geometry("500x500")
 
 background = tkinter.Canvas(window, width = 500, height = 500, background = "#4CC", bd=0, highlightthickness=0)
 background.pack()
-birdImg = tkinter.PhotoImage(file="img/bird5.png")
+birdImg = tkinter.PhotoImage(file="img/bird.png")
 
 class Population: # definit une population de birds
 	def __init__(self, n):
@@ -36,7 +35,7 @@ class Bird: # definit un oiseau
 		self.genome = genGenome()
 		self.velocity = 0
 
-	def reset(self):
+	def reset(self): # reset les coordonnees
 		self.X = 100
 		self.Y = 250
 		background.coords(self.object, self.X, self.Y)
@@ -45,7 +44,7 @@ class Bird: # definit un oiseau
 		self.score = 0
 		self.velocity = 0
 
-	def fly(self):
+	def fly(self): # etablit une vitesse forte negative (vers le haut)
 		self.velocity = -4.75
 
 	def getBirdY(self): # hauteur de l'oiseau relative au pipeline
@@ -54,7 +53,9 @@ class Bird: # definit un oiseau
 	def getBirdX(self): # distance de l'oiseau relative au pipeline
 		return pipelineX - self.X
 
-POP = 10 # min = 3, max = 50+ <=> Nombre d'oisea
+POP = 10 # min = 3, max = 50+ <=> Nombre d'oiseaux
+POP_NUM = 1 # numero de la population
+HOLE = 90
 population = Population(POP)
 endMarker = time.time()
 result = ''
@@ -62,7 +63,7 @@ result = ''
 pipelineX = 500
 pipelineY = 150
 pipelineTop = background.create_rectangle(pipelineX, 0, pipelineX + 70, pipelineY, fill="#7B2", outline="#7B2")
-pipelineBottom = background.create_rectangle(pipelineX, pipelineY + 80, pipelineX + 70, 500, fill="#7B2", outline="#7B2")
+pipelineBottom = background.create_rectangle(pipelineX, pipelineY + HOLE, pipelineX + 70, 500, fill="#7B2", outline="#7B2")
 
 scoreText = background.create_text(230, 50, fill="white", font="Times 50 bold", text="0") # texte score actuel
 popText = background.create_text(60, 485, fill="white", font="Times 12 bold", text="Population n° 1") # texte population actuelle
@@ -80,7 +81,7 @@ except:
 def restart(event):
 	global population, POP_NUM
 	global pipelineX, pipelineY
-	global bS, nG
+	global bS, nG, endMarker
 	POP_NUM += 1
 	background.itemconfig(popText, text="Population n° {}".format(POP_NUM)) # Affiche le nombre de pop qui ont vecu
 	pipelineX = 500
@@ -101,7 +102,7 @@ def restart(event):
 		population.birds[1].genome = population.elitism['genome'].mutate() # selection sure avec mutation pour assurer une evolution quelconque
 	population.survivors = POP
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
-	background.coords(pipelineBottom, pipelineX, pipelineY + 80, pipelineX + 70, 500)
+	background.coords(pipelineBottom, pipelineX, pipelineY + HOLE, pipelineX + 70, 500)
 	with open('stats.json', 'w+') as f: # write to stats.json
 		temp = json.dumps({'bestScore':bS, 'numberGames':nG})
 		temp = codecs.decode(base64.b85encode(codecs.encode(temp)))
@@ -120,20 +121,20 @@ def updateResult():
 
 def motion(): # fonction principale
 	global pipelineX, pipelineY, population
-	print([bird.fitness for bird in population.birds], population.best, population.elitism['fitness'])
-	if (population.survivors <= 0):
+	print([bird.fitness for bird in population.birds], population.best, population.elitism['fitness']) # affichage fitness
+	if (population.survivors <= 0): # s'il n'y a pas de survivants, redemarrage
 		restart(0)
 		return False
 	for bird in population.birds:
 		if (bird.alive == True):
 			bird.Y += bird.velocity # update position
-			bird.velocity += 0.25 # gravity
+			bird.velocity += 0.25 # gravite
 			background.coords(bird.object, 100, bird.Y)
 			if (bird.X < pipelineX and (bird.X + 9) >= pipelineX): # incremente le score
 				bird.score += 1
 				background.itemconfig(scoreText, text=bird.score)
 			if ((bird.X + 21) >= pipelineX and bird.X <= (pipelineX + 70)): # collisions
-				if ((bird.Y - 17) <= pipelineY or (bird.Y + 17) >= (pipelineY + 80)):
+				if ((bird.Y - 17) <= pipelineY or (bird.Y + 17) >= (pipelineY + HOLE)):
 					bird.alive = False
 					population.survivors -= 1
 			bird.fitness += 1
@@ -148,7 +149,7 @@ def motion(): # fonction principale
 	else:
 		pipelineX -= 5
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
-	background.coords(pipelineBottom, pipelineX, pipelineY + 80, pipelineX + 70, 500)
+	background.coords(pipelineBottom, pipelineX, pipelineY + HOLE, pipelineX + 70, 500)
 	if (time.time() - endMarker > 180): # pour ecrire des resultats statistiques
 		with open('result.txt', 'w') as f:
 			updateResult()
