@@ -11,6 +11,7 @@ import time
 window = tkinter.Tk()
 window.resizable(width = False, height = False)
 window.title("Flappy Bird")
+window.iconbitmap("img/adn.ico")
 window.geometry("500x500")
 
 background = tkinter.Canvas(window, width = 500, height = 500, background = "#4CC", bd=0, highlightthickness=0)
