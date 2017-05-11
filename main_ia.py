@@ -16,7 +16,7 @@ window.geometry("500x500")
 
 background = tkinter.Canvas(window, width = 500, height = 500, background = "#4CC", bd=0, highlightthickness=0)
 background.pack()
-birdImg = tkinter.PhotoImage(file="img/bird.png")
+birdImg = tkinter.PhotoImage(file="img/bird.png").subsample(2, 2)
 
 # ces 2 class sont dans bird.py mais cela ne marche pas encore en import (car il faudrait redefinir les objets tkinter)
 class Population: # definit une population de birds
@@ -98,7 +98,7 @@ def restart(event):
 	background.itemconfig(scoreText, text="0")
 	motion()
 
-def updateResult():
+def updateResult(): # fonction servant a formater les donnees qu'on va ensuite ecrire dans un fichier texte (pour des stats uniquement)
 	global result
 	temp = {'soluces':[], 'fitness':[]}
 	for bird in population.birds:
@@ -137,12 +137,7 @@ def motion(): # fonction principale
 		pipelineX -= 5
 	background.coords(pipelineTop, pipelineX, 0, pipelineX + 70, pipelineY)
 	background.coords(pipelineBottom, pipelineX, pipelineY + HOLE, pipelineX + 70, 500)
-	if (time.time() - endMarker > 180): # pour ecrire des resultats statistiques
-		with open('data/result.txt', 'w') as f:
-			updateResult()
-			f.write(result)
-		return False
-	window.after(int(1000/100), motion) # boucle infinie, 1000/x img par secondes (ex: 1000/50, 1000/150 1000/500)
+	window.after(int(1000/500), motion) # boucle infinie, 1000/x img par secondes (ex: 1000/50, 1000/150 1000/500)
 
 # run
 motion()
