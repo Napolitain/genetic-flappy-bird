@@ -142,7 +142,7 @@ def motion(): # fonction principale
 			updateResult()
 			f.write(result)
 		return False
-	window.after(int(1000/150), motion) # boucle infinie, 1000/x img par secondes (ex: 1000/50, 1000/150 1000/500)
+	window.after(int(1000/100), motion) # boucle infinie, 1000/x img par secondes (ex: 1000/50, 1000/150 1000/500)
 
 # run
 motion()
