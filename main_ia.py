@@ -16,7 +16,7 @@ window.geometry("500x500")
 
 background = tkinter.Canvas(window, width = 500, height = 500, background = "#4CC", bd=0, highlightthickness=0)
 background.pack()
-birdImg = tkinter.PhotoImage(file="img/bird.png").subsample(2, 2)
+birdImg = tkinter.PhotoImage(file="img/bird.png")
 
 # ces 2 class sont dans bird.py mais cela ne marche pas encore en import (car il faudrait redefinir les objets tkinter)
 class Population: # definit une population de birds
