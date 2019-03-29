@@ -9,7 +9,8 @@ Le programme est composé en deux parties :
 
 Le but de ce projet d'intelligence artificielle est de nous permettre d'apprendre les bases de la programmation d'IA.
 A la fin de ce projet l'oiseau doit être capable d'effectuer un score satisfaisant et au delà des performances humaines.
-
+L'intelligence n'est pas parfaite puisque chaque oiseau dispose de l'information "hauteur" pour sauter.
+Une évolution serait d'effacer cette information des oiseaux, et de les faire sauter au bout d'un certain temps.
 
 ![Image du jeu](https://gitlab.com/Napolitain/genetic-flappy-bird/raw/master/img/presentation.png)
 
